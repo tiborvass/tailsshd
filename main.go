@@ -29,6 +29,10 @@ func main() {
 	if len(os.Args) > 1 {
 		hostname = os.Args[1]
 	}
+	shell := "/bin/sh"
+	if len(os.Args) > 2 {
+		shell = os.Args[2]
+	}
 
 	s := &tsnet.Server{
 		Hostname: hostname,       // shows up in your Tailnet
@@ -106,7 +110,7 @@ func main() {
 								continue
 							}
 							req.Reply(true, nil)
-							cmd := exec.Command("/bin/sh")
+							cmd := exec.Command(shell)
 							if ptyRequested {
 								ptmx, err := pty.Start(cmd)
 								if err != nil {
